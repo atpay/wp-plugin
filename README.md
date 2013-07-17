@@ -1,4 +1,4 @@
-wp_plugin_template
+@Pay API Wordpress Plugin
 ==================
 
-A plugin template
+Integrate the @Pay plugin into your wordpress stroefront.
