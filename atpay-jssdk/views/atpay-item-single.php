@@ -7,32 +7,40 @@ if (have_posts()) :
       the_post();?>
       
       
-      
- 
-<?php $price = preg_replace('/[\$,]/', '', @get_post_meta($post->ID, 'price', true)   ); ?>
+<?php 
+$btn_color = get_option('btn_color') ?: '#6dbe45';
+$btn_img = get_option('btn_img') ?: 'https://www.atpay.com/wp-content/themes/atpay/images/bttn_cart.png';
+$price = preg_replace('/[\$,]/', '', @get_post_meta($post->ID, 'price', true)   ); 
+?>
 
 
- 
-<!--
- <a id="connect" href='#' onclick="atpay.connect(function(data){ $('#connect').html(data.username); $('#logout').show(); });">Connect </a>
-  <a id="logout" style="display:none;" href='#' onclick="atpay.logout(function(data){ alert('Cleared'); });">Logout </a>
--->
+
+
+
+<script type="text/javascript">
+	function btn_confirm() {
+	var r=confirm("Do you want to purches this item?")
+	if (r==true) {
+		atpay.buy(<?php echo $price ?>, '<?php the_title(); ?> - Buy My Themes', function(){alert('Thanks!');});
+	 } else {
+		alert("You have not made a purchase");
+	  }
+	}
+</script>
 
  
- <div style="float:left; width:600px;">     
+<div style="float:left; width:600px;">     
       <h1 style="font-size:30px; margin-bottom:0px; float:left;"><?php the_title(); ?> </h1>
 
-
-
-<a border='0' class='not_outlook' href='#' onclick="atpay.buy(<?php echo $price ?>, '<?php the_title(); ?> - Buy My Themes', function(){alert('Thanks!');});" style='text-underline:none; display:block; float:right; margin-top:-10px; margin-right:10px'>
-    <table border='0' cellpadding='0' cellspacing='0' style='background-color: <?php echo get_option('btn_color') ?>;'>
+<a border='0' class='not_outlook' href='#' onclick="btn_confirm();" style='text-underline:none; display:block; float:right; margin-top:-10px; margin-right:10px'>
+    <table border='0' cellpadding='0' cellspacing='0' style='background-color: <?php echo $btn_color; ?>;'>
       <tr>
         <td style='padding:3px 5px 5px 5px;' width='145'>
           <table>
             <tr>
               <td>
                 <a class='not_outlook' href='#'  style='color:#ffffff; text-decoration:none; border:none; display:inline;'>
-                  <img src='<?php echo get_option('btn_img') ?>' style='margin-left: 5px; margin-right:10px; margin-top:8px;'>
+                  <img src='<?php echo $btn_img;?>' style='margin-left: 5px; margin-right:10px; margin-top:8px;'>
                 </a>
               </td>
               <td>

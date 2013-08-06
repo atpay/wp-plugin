@@ -22,6 +22,12 @@ if(!class_exists('Post_Type_Template'))
     		// register actions
     		add_action('init', array(&$this, 'init'));
     		add_action('admin_init', array(&$this, 'admin_init'));
+    		add_action('do_meta_boxes', array(&$this, 'remove_image_box'));
+
+
+
+
+
     	} // END public function __construct()
 
     	/**
@@ -31,7 +37,9 @@ if(!class_exists('Post_Type_Template'))
     	{
     		// Initialize Post Type
     		$this->create_post_type();
+    		
     		add_action('save_post', array(&$this, 'save_post'));
+
     	} // END public function init()
 
     	/**
@@ -48,10 +56,10 @@ if(!class_exists('Post_Type_Template'))
     				),
     				'public' => true,
     				'has_archive' => true,
-    				    					'rewrite' => array( 'slug' => get_option('setting_z'), 'with_front' => false ),
+    				    					'rewrite' => array( 'slug' => get_option('store_slug'), 'with_front' => false ),
 
     				'supports' => array(
-    					'title', 'editor', 'excerpt', 'thumbnail' 
+    					'title', 'editor','thumbnail' 
     				),
     			)
     		);
@@ -59,7 +67,19 @@ if(!class_exists('Post_Type_Template'))
     		 flush_rewrite_rules(); 
     		
     	}
-	
+
+
+
+
+
+public function remove_image_box() {
+	if ($current_user->user_level < 10){
+		remove_meta_box( 'postimagediv','atpay-item','side' );
+		add_meta_box('postimagediv', __('Custom Image'), 'post_thumbnail_meta_box', 'atpay-item', 'normal', 'high');
+
+	}
+}
+
     	/**
     	 * Save the metaboxes for this custom post type
     	 */
