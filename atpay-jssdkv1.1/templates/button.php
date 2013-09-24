@@ -90,7 +90,7 @@ margin-top: 5px;
 
 
 
-#atpay_overlay {
+.atpay_overlay {
     position: fixed;
     top: 0;
     left: 0;

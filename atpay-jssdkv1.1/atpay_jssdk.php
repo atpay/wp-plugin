@@ -2,7 +2,7 @@
 /*
 Plugin Name:  @Pay Connect
 Description: Connect to your @Pay Merchant account and sell  right from wordpress.
-Version: 0.1
+Version: 1.1
 Author: Isaiah Baca
 Author URI: http://www.atpay.com
 License: GPL2
@@ -109,7 +109,7 @@ function js_local(){ ?>
       if(amount){
         var r=confirm("Do you want to purchase this item?")
         if(r==true){
-          var overlay = jQuery('<div id="atpay_overlay"><div class="atpay_overlayB"></div> </div>');
+          var overlay = jQuery('<div class="atpay_overlay"><div class="atpay_overlayB"></div> </div>');
           $(overlay).hide().appendTo("body").fadeIn(1000);
           atpay.buy(amount, ref, atPayReturn); 
         }
@@ -134,7 +134,7 @@ function js_local(){ ?>
       if (r==true) {
         var amount =  parseFloat(price.replace("$", ""));
         if(localStorage.atPayToken){
-          var overlay = jQuery('<div id="atpay_overlay"><div class="atpay_overlayB"></div> </div>');
+          var overlay = jQuery('<div class="atpay_overlay"><div class="atpay_overlayB"></div> </div>');
           $(overlay).hide().appendTo("body").fadeIn(1000);
           atpay.buy(amount, ref, atPayReturn);
         }else{
@@ -148,8 +148,11 @@ function js_local(){ ?>
 
 
     function atPayReturn(data) {
+	  
+	  $(".atpay_overlay").fadeOut(1000);
+
+
       alert('Thank You, Your Purchase is Complete!');
-      $("#atpay_overlay").fadeOut(1000);
       atPayResponse = data;
       if(localStorage[atPayResponse.referrer_context]){
         localStorage[atPayResponse.referrer_context]=Number(localStorage[atPayResponse.referrer_context])+1;
